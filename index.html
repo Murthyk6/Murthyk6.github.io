@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K Narayana Murthy — DevOps / SRE Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #060810;
+      --bg2:      #0b0f1a;
+      --surface:  #0f1420;
+      --surface2: #141928;
+      --border:   #1e2535;
+      --border2:  #252d42;
+      --blue:     #4f8ef7;
+      --blue2:    #2563eb;
+      --cyan:     #22d3ee;
+      --green:    #10b981;
+      --purple:   #a78bfa;
+      --orange:   #fb923c;
+      --red:      #f87171;
+      --text:     #e2e8f8;
+      --text2:    #94a3b8;
+      --text3:    #64748b;
+      --mono:     'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    /* ─── GRID BACKGROUND ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      background: rgba(6,8,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo::before { content: '~/'; color: var(--text3); }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 0.3rem;
+    }
+    nav ul a {
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text2);
+      transition: all 0.2s;
+      font-family: var(--mono);
+    }
+    nav ul a:hover {
+      color: var(--text);
+      background: var(--surface2);
+    }
+    .nav-cta {
+      padding: 0.38rem 1rem !important;
+      background: var(--blue2) !important;
+      color: #fff !important;
+      border-radius: 6px;
+    }
+
+    /* ─── WRAPPER ─── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 60px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--green);
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      margin-bottom: 1.8rem;
+    }
+    .hero-eyebrow::before { content: '●'; font-size: 0.5rem; animation: blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 .name-accent {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 50%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-tagline {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--text2);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      max-width: 640px;
+    }
+    .hero-tagline strong { color: var(--text); font-weight: 600; }
+
+    /* terminal block */
+    .terminal {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      max-width: 620px;
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .terminal-bar {
+      background: var(--surface2);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .t-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .t-dot.r { background: #ff5f56; }
+    .t-dot.y { background: #ffbd2e; }
+    .t-dot.g { background: #27c93f; }
+    .terminal-title {
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--text3);
+    }
+    .terminal-body {
+      padding: 1.2rem 1.4rem;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 2;
+    }
+    .t-prompt { color: var(--green); }
+    .t-cmd { color: var(--text); }
+    .t-out { color: var(--text2); }
+    .t-key { color: var(--cyan); }
+    .t-val { color: var(--purple); }
+    .t-str { color: var(--orange); }
+    .t-num { color: var(--blue); }
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: var(--cyan);
+      vertical-align: middle;
+      animation: blink 1s infinite;
+    }
+
+    .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue2), #1d4ed8);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(37,99,235,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(37,99,235,0.5); }
+    .btn-ghost {
+      background: var(--surface);
+      color: var(--text2);
+      border: 1px solid var(--border2);
+    }
+    .btn-ghost:hover { background: var(--surface2); color: var(--text); transform: translateY(-2px); }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 6rem 0; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--text2);
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+      max-width: 560px;
+    }
+    .divider {
+      width: 40px; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      border-radius: 2px;
+      margin-bottom: 0.8rem;
+    }
+
+    /* ─── METRICS ─── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 5rem;
+    }
+    .metric {
+      background: var(--surface);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .metric:hover { background: var(--surface2); }
+    .metric-num {
+      font-size: 2.6rem;
+      font-weight: 900;
+      font-family: var(--mono);
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .metric-label { font-size: 0.8rem; color: var(--text2); margin-top: 0.3rem; }
+
+    /* ─── SKILLS ─── */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-group:hover { border-color: var(--border2); transform: translateY(-2px); }
+    .skill-group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .skill-icon {
+      width: 32px; height: 32px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+    .skill-group-title { font-size: 0.82rem; font-weight: 700; font-family: var(--mono); }
+    .pill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .pill {
+      padding: 0.28rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      font-family: var(--mono);
+      border: 1px solid transparent;
+    }
+    .pill-blue  { background: rgba(79,142,247,0.1);  color: #7cb4ff; border-color: rgba(79,142,247,0.2); }
+    .pill-cyan  { background: rgba(34,211,238,0.1);  color: #67e8f9; border-color: rgba(34,211,238,0.2); }
+    .pill-green { background: rgba(16,185,129,0.1);  color: #6ee7b7; border-color: rgba(16,185,129,0.2); }
+    .pill-purple{ background: rgba(167,139,250,0.1); color: #c4b5fd; border-color: rgba(167,139,250,0.2); }
+    .pill-orange{ background: rgba(251,146,60,0.1);  color: #fdba74; border-color: rgba(251,146,60,0.2); }
+    .pill-red   { background: rgba(248,113,113,0.1); color: #fca5a5; border-color: rgba(248,113,113,0.2); }
+
+    /* ─── EXPERIENCE ─── */
+    .exp-timeline { position: relative; }
+    .exp-timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--blue), var(--cyan), transparent);
+    }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem 2rem;
+      margin-left: 56px;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .exp-card:hover {
+      border-color: var(--border2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .exp-dot {
+      position: absolute;
+      left: -44px;
+      top: 24px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 10px var(--blue);
+    }
+    .exp-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
+    .exp-company { font-size: 1.15rem; font-weight: 800; }
+    .exp-badge {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      background: rgba(79,142,247,0.12);
+      color: var(--blue);
+      border: 1px solid rgba(79,142,247,0.25);
+    }
+    .exp-badge.current {
+      background: rgba(16,185,129,0.12);
+      color: var(--green);
+      border-color: rgba(16,185,129,0.25);
+    }
+    .exp-role-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .exp-role-title { font-size: 0.85rem; color: var(--cyan); font-weight: 600; }
+    .exp-role-sep { color: var(--text3); font-size: 0.75rem; }
+    .exp-location { font-size: 0.8rem; color: var(--text3); font-family: var(--mono); }
+    .exp-bullets { list-style: none; }
+    .exp-bullets li {
+      color: var(--text2);
+      font-size: 0.875rem;
+      padding: 0.35rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-bullets li:last-child { border-bottom: none; }
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-size: 0.7rem;
+      top: 0.42rem;
+    }
+    .exp-bullets li strong { color: var(--text); font-weight: 600; }
+    .impact-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .impact-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+    }
+    .impact-chip.green { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+    .impact-chip.blue  { background: rgba(79,142,247,0.1); color: var(--blue);  border: 1px solid rgba(79,142,247,0.2); }
+    .impact-chip.purple{ background: rgba(167,139,250,0.1); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.2rem;
+    }
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .proj-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .proj-card:hover::before { opacity: 1; }
+    .proj-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .proj-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .proj-title { font-size: 1rem; font-weight: 800; margin-bottom: 0.1rem; }
+    .proj-company { font-size: 0.75rem; color: var(--text3); font-family: var(--mono); }
+    .proj-desc { color: var(--text2); font-size: 0.85rem; flex: 1; }
+    .proj-stack { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .proj-stack .pill { font-size: 0.72rem; }
+
+    /* ─── EDUCATION ─── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+      transition: border-color 0.2s;
+    }
+    .edu-card:hover { border-color: var(--border2); }
+    .edu-degree { font-size: 0.78rem; color: var(--cyan); font-family: var(--mono); font-weight: 700; margin-bottom: 0.5rem; }
+    .edu-school { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .edu-meta { font-size: 0.8rem; color: var(--text3); font-family: var(--mono); }
+
+    /* ─── CONTACT ─── */
+    .contact-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .contact-left h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .contact-left p { color: var(--text2); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: var(--blue); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+    .contact-link-label { font-size: 0.7rem; color: var(--text3); font-family: var(--mono); }
+    .contact-link-val { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .contact-right { display: flex; flex-direction: column; gap: 1rem; }
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green);
+      font-family: var(--mono);
+      margin-bottom: 1rem;
+    }
+    .availability-badge::before { content: '●'; font-size: 0.5rem; animation: blink 1.4s infinite; }
+    .stack-showcase { display: flex; flex-direction: column; gap: 0.6rem; }
+    .stack-row { display: flex; align-items: center; gap: 0.8rem; }
+    .stack-name { font-size: 0.78rem; font-family: var(--mono); color: var(--text3); width: 120px; flex-shrink: 0; }
+    .stack-bar-bg {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .stack-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+    .stack-pct { font-size: 0.72rem; font-family: var(--mono); color: var(--text3); width: 30px; text-align: right; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer .f-left {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text3);
+    }
+    footer .f-left span { color: var(--cyan); }
+    footer .f-right { display: flex; gap: 1rem; }
+    footer .f-right a {
+      font-size: 0.78rem;
+      color: var(--text3);
+      font-family: var(--mono);
+      transition: color 0.2s;
+    }
+    footer .f-right a:hover { color: var(--text); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .skills-layout { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .contact-section { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; }
+      .exp-timeline::before { left: 0; }
+      .exp-card { margin-left: 20px; }
+      .exp-dot { left: -28px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-logo">knm</div>
+  <ul>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#education">education</a></li>
+    <li><a href="#contact" class="nav-cta">contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="wrapper">
+  <div class="hero">
+    <div class="hero-eyebrow">Available for new opportunities</div>
+    <h1>
+      <span class="name-accent">K Narayana Murthy</span><br />
+      DevOps / SRE Engineer
+    </h1>
+    <p class="hero-tagline">
+      Building <strong>fault-tolerant cloud infrastructure</strong> and CI/CD systems at scale.
+      2+ years shipping reliable Kubernetes platforms, observability stacks, and automation pipelines on AWS.
+    </p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot r"></div>
+        <div class="t-dot y"></div>
+        <div class="t-dot g"></div>
+        <span class="terminal-title">~/portfolio — zsh</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-prompt">❯</span> <span class="t-cmd">cat engineer.json</span></div>
+        <div><span class="t-out">{</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-out">:</span> <span class="t-str">"K Narayana Murthy"</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"role"</span><span class="t-out">:</span> <span class="t-str">"DevOps / SRE Engineer"</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"experience"</span><span class="t-out">:</span> <span class="t-str">"2+ years"</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"cloud"</span><span class="t-out">:</span> <span class="t-str">"AWS"</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"uptime"</span><span class="t-out">:</span> <span class="t-num">99.9</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"cost_reduction"</span><span class="t-out">:</span> <span class="t-str">"~20%"</span><span class="t-out">,</span></div>
+        <div>&nbsp;&nbsp;<span class="t-key">"location"</span><span class="t-out">:</span> <span class="t-str">"Bangalore, India"</span></div>
+        <div><span class="t-out">}</span></div>
+        <div>&nbsp;</div>
+        <div><span class="t-prompt">❯</span> <span class="cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:murthyk7592@gmail.com">✉ Get in Touch</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/narayana-murthy-k" target="_blank">↗ LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/narayana-murthy-k" target="_blank">⌥ GitHub</a>
+    </div>
+  </div>
+
+  <!-- ═══════ METRICS ═══════ -->
+  <div class="metrics-row">
+    <div class="metric"><div class="metric-num" data-target="2">0</div><div class="metric-label">Years of Experience</div></div>
+    <div class="metric"><div class="metric-num" data-target="3" data-suffix="x">0</div><div class="metric-label">Release Frequency Improved</div></div>
+    <div class="metric"><div class="metric-num" data-target="99.9" data-suffix="%">0</div><div class="metric-label">Production Availability</div></div>
+    <div class="metric"><div class="metric-num" data-target="20" data-suffix="%">0</div><div class="metric-label">Cloud Cost Reduction</div></div>
+    <div class="metric"><div class="metric-num" data-target="90" data-suffix="%">0</div><div class="metric-label">Manual Ops Eliminated</div></div>
+    <div class="metric"><div class="metric-num" data-target="70" data-suffix="%">0</div><div class="metric-label">Infra Setup Time Reduced</div></div>
+  </div>
+
+  <!-- ═══════ SKILLS ═══════ -->
+  <section id="skills">
+    <div class="divider"></div>
+    <div class="section-label">// expertise</div>
+    <h2 class="section-title">Technical Stack</h2>
+    <p class="section-sub">Production-hardened tools across cloud, containers, observability, and automation.</p>
+    <div class="skills-layout">
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(79,142,247,0.12);">☁</div>
+          <span class="skill-group-title" style="color:var(--blue);">Cloud & Infrastructure</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-blue">AWS EC2</span><span class="pill pill-blue">ECS</span><span class="pill pill-blue">EKS</span>
+          <span class="pill pill-blue">Lambda</span><span class="pill pill-blue">RDS</span><span class="pill pill-blue">S3</span>
+          <span class="pill pill-blue">IAM</span><span class="pill pill-blue">CloudFront</span>
+          <span class="pill pill-blue">Terraform</span><span class="pill pill-blue">GCP GKE</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(34,211,238,0.12);">⎆</div>
+          <span class="skill-group-title" style="color:var(--cyan);">Containers & Orchestration</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-cyan">Docker</span><span class="pill pill-cyan">Kubernetes</span>
+          <span class="pill pill-cyan">Helm</span><span class="pill pill-cyan">ECS</span><span class="pill pill-cyan">EKS</span>
+          <span class="pill pill-cyan">Rolling Updates</span><span class="pill pill-cyan">Ingress</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(16,185,129,0.12);">⟳</div>
+          <span class="skill-group-title" style="color:var(--green);">CI/CD & Automation</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-green">GitLab CI</span><span class="pill pill-green">Jenkins</span>
+          <span class="pill pill-green">Bitbucket Pipelines</span><span class="pill pill-green">AWS CodePipeline</span>
+          <span class="pill pill-green">Blue-Green Deploy</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(167,139,250,0.12);">◎</div>
+          <span class="skill-group-title" style="color:var(--purple);">Observability & SRE</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-purple">Prometheus</span><span class="pill pill-purple">Grafana</span>
+          <span class="pill pill-purple">CloudWatch</span><span class="pill pill-purple">Custom Exporters</span>
+          <span class="pill pill-purple">SLO / SLA</span><span class="pill pill-purple">Alerting</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(251,146,60,0.12);">⟁</div>
+          <span class="skill-group-title" style="color:var(--orange);">Networking & Proxying</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-orange">NGINX</span><span class="pill pill-orange">Load Balancing</span>
+          <span class="pill pill-orange">Ingress Controllers</span><span class="pill pill-orange">SIP/RTP</span>
+          <span class="pill pill-orange">Rate Limiting</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-header">
+          <div class="skill-icon" style="background:rgba(248,113,113,0.12);">⌥</div>
+          <span class="skill-group-title" style="color:var(--red);">Programming & Databases</span>
+        </div>
+        <div class="pill-list">
+          <span class="pill pill-red">Python</span><span class="pill pill-red">Java</span>
+          <span class="pill pill-red">Shell Scripting</span><span class="pill pill-red">SQL</span>
+          <span class="pill pill-red">PostgreSQL</span><span class="pill pill-red">MySQL</span>
+          <span class="pill pill-red">Spring Boot</span><span class="pill pill-red">Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ EXPERIENCE ═══════ -->
+  <section id="experience">
+    <div class="divider"></div>
+    <div class="section-label">// career</div>
+    <h2 class="section-title">Work Experience</h2>
+    <p class="section-sub">Delivering infrastructure reliability and platform engineering in production environments.</p>
+    <div class="exp-timeline">
+
+      <div class="exp-card">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <span class="exp-company">Ubona Technologies</span>
+          <span class="exp-badge current">● Oct 2024 – Present</span>
+        </div>
+        <div class="exp-role-line">
+          <span class="exp-role-title">DevOps Engineer</span>
+          <span class="exp-role-sep">·</span>
+          <span class="exp-location">Bangalore, India</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed and automated <strong>AWS infrastructure using Terraform</strong> across multiple environments for high-availability production workloads.</li>
+          <li>Built CI/CD pipelines with <strong>GitLab CI and Jenkins</strong> — zero-downtime deployments, <strong>3x increase</strong> in release frequency.</li>
+          <li>Operated <strong>Kubernetes workloads</strong> with rolling updates, readiness/liveness probes; led ECS → EKS migration planning and ingress configuration.</li>
+          <li>Built observability with <strong>Prometheus, Grafana, and CloudWatch</strong>; custom RTP/RTCP exporters (packet loss, jitter, latency) for SIP traffic.</li>
+          <li>Implemented <strong>AWS Lambda deployment guardrails</strong> using event-driven automation to block risky production changes in critical windows.</li>
+          <li>Engineered low-latency <strong>NGINX ingress</strong> for real-time SIP traffic — routing, rate limiting, and performance tuning.</li>
+          <li>Built <strong>Linux access lifecycle automation</strong> using Keycloak + PAM integrations, eliminating <strong>90% of manual ops effort</strong>.</li>
+          <li>Reduced cloud operational costs by <strong>~20%</strong> through infrastructure optimization and deployment workflow improvements.</li>
+        </ul>
+        <div class="impact-row">
+          <span class="impact-chip green">↑ 3x Release Frequency</span>
+          <span class="impact-chip green">99.9% Availability</span>
+          <span class="impact-chip blue">↓ 20% Cloud Cost</span>
+          <span class="impact-chip purple">90% Manual Ops Eliminated</span>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-dot" style="background:var(--purple); box-shadow:0 0 10px var(--purple);"></div>
+        <div class="exp-top">
+          <span class="exp-company">MountBlue Technologies</span>
+          <span class="exp-badge">Jul 2023 – Oct 2024</span>
+        </div>
+        <div class="exp-role-line">
+          <span class="exp-role-title" style="color:var(--purple);">Software Engineer (Backend / DevOps)</span>
+          <span class="exp-role-sep">·</span>
+          <span class="exp-location">Bangalore, India</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Developed backend services using <strong>Java, Spring Boot, and PostgreSQL</strong> for production applications.</li>
+          <li>Provisioned and managed AWS infrastructure using <strong>reusable Terraform modules</strong>, reducing environment setup time by <strong>70%</strong>.</li>
+          <li>Implemented <strong>blue-green deployment strategies</strong> to minimize release risk and support zero-downtime production deployments.</li>
+          <li>Containerized applications using <strong>Docker</strong> and standardized deployment workflows for development and staging environments.</li>
+        </ul>
+        <div class="impact-row">
+          <span class="impact-chip green">↓ 70% Setup Time</span>
+          <span class="impact-chip blue">Zero-Downtime Deploys</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════ PROJECTS ═══════ -->
+  <section id="projects">
+    <div class="divider"></div>
+    <div class="section-label">// projects</div>
+    <h2 class="section-title">Featured Work</h2>
+    <p class="section-sub">Production systems built to solve real engineering and business problems.</p>
+    <div class="projects-grid">
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(34,211,238,0.12); color:var(--cyan);">📊</div>
+          <div>
+            <div class="proj-title">SIP Usage Portal</div>
+            <div class="proj-company">Ubona Technologies</div>
+          </div>
+        </div>
+        <p class="proj-desc">
+          Centralized analytics portal tracking telecom usage data (DID, cost, DND complaints) across TATA, Airtel, and Jio. REST APIs via Spring Boot with reactive programming, NocoDB bulk API integration, and a React dashboard with time-series charts and anomaly highlighting.
+        </p>
+        <div class="proj-stack">
+          <span class="pill pill-cyan">Spring Boot</span><span class="pill pill-cyan">React</span>
+          <span class="pill pill-purple">Prometheus</span><span class="pill pill-orange">NocoDB</span>
+          <span class="pill pill-blue">AWS</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(16,185,129,0.12); color:var(--green);">🛡</div>
+          <div>
+            <div class="proj-title">Deployment Guardrails</div>
+            <div class="proj-company">CI/CD Safety System</div>
+          </div>
+        </div>
+        <p class="proj-desc">
+          AWS Lambda-driven automation integrated into GitLab CI and Jenkins to block deployments during critical production windows. Event-driven logic evaluates business-hour windows and prevents risky changes at peak traffic.
+        </p>
+        <div class="proj-stack">
+          <span class="pill pill-blue">AWS Lambda</span><span class="pill pill-green">GitLab CI</span>
+          <span class="pill pill-green">Jenkins</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(167,139,250,0.12); color:var(--purple);">⎆</div>
+          <div>
+            <div class="proj-title">ECS → EKS Migration</div>
+            <div class="proj-company">Kubernetes Platform</div>
+          </div>
+        </div>
+        <p class="proj-desc">
+          Full container platform migration from ECS to EKS including Helm chart authoring, ingress configuration, observability integration, and production traffic cutover planning.
+        </p>
+        <div class="proj-stack">
+          <span class="pill pill-cyan">Kubernetes</span><span class="pill pill-cyan">Helm</span>
+          <span class="pill pill-purple">Prometheus</span><span class="pill pill-purple">Grafana</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(251,146,60,0.12); color:var(--orange);">🔊</div>
+          <div>
+            <div class="proj-title">Voice Observability</div>
+            <div class="proj-company">SIP/RTP Monitoring</div>
+          </div>
+        </div>
+        <p class="proj-desc">
+          Custom Prometheus exporters for RTP/RTCP metrics — packet loss, jitter, and latency — enabling real-time alerting and dashboarding for SIP voice traffic at scale.
+        </p>
+        <div class="proj-stack">
+          <span class="pill pill-purple">Prometheus</span><span class="pill pill-purple">Grafana</span>
+          <span class="pill pill-orange">SIP/RTP</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <div class="proj-icon" style="background:rgba(79,142,247,0.12); color:var(--blue);">♻</div>
+          <div>
+            <div class="proj-title">S3 Lifecycle Automation</div>
+            <div class="proj-company">Data Management</div>
+          </div>
+        </div>
+        <p class="proj-desc">
+          Python workflows for large-scale S3 and Glacier data operations — archival, retrieval, and lifecycle policy management — eliminating manual operational overhead for data management at scale.
+        </p>
+        <div class="proj-stack">
+          <span class="pill pill-blue">AWS S3</span><span class="pill pill-blue">Glacier</span>
+          <span class="pill pill-red">Python</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════ EDUCATION ═══════ -->
+  <section id="education">
+    <div class="divider"></div>
+    <div class="section-label">// education</div>
+    <h2 class="section-title">Academic Background</h2>
+    <p class="section-sub">Strong foundation in computer science underpinning systems and infrastructure work.</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">B.Tech in Computer Science & Engineering</div>
+        <div class="edu-school">Vel Tech University</div>
+        <div class="edu-meta">Tamil Nadu, India · 2019 – 2023</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Intermediate (MPC)</div>
+        <div class="edu-school">Narayana Junior College</div>
+        <div class="edu-meta">Vijayawada, India · 2017 – 2019</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ CONTACT ═══════ -->
+  <section id="contact">
+    <div class="contact-section">
+      <div class="contact-left">
+        <div class="availability-badge">Open to opportunities</div>
+        <h2>Let's Build Something Reliable</h2>
+        <p>Looking for DevOps / SRE roles where I can architect scalable infrastructure, improve reliability, and reduce toil. Open to full-time and contract engagements.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:murthyk7592@gmail.com">
+            <div class="contact-link-icon" style="background:rgba(79,142,247,0.12); color:var(--blue);">✉</div>
+            <div><div class="contact-link-label">email</div><div class="contact-link-val">murthyk7592@gmail.com</div></div>
+          </a>
+          <a class="contact-link" href="tel:+919908536205">
+            <div class="contact-link-icon" style="background:rgba(16,185,129,0.12); color:var(--green);">☎</div>
+            <div><div class="contact-link-label">phone</div><div class="contact-link-val">+91 9908536205</div></div>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/narayana-murthy-k" target="_blank">
+            <div class="contact-link-icon" style="background:rgba(34,211,238,0.12); color:var(--cyan);">in</div>
+            <div><div class="contact-link-label">linkedin</div><div class="contact-link-val">narayana-murthy-k</div></div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="stack-showcase">
+          <div style="font-size:0.78rem; font-family:var(--mono); color:var(--text3); margin-bottom:0.5rem;">// core competency levels</div>
+          <div class="stack-row">
+            <span class="stack-name">Kubernetes</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:88%"></div></div>
+            <span class="stack-pct">88%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">Terraform</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:90%"></div></div>
+            <span class="stack-pct">90%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">AWS</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:92%"></div></div>
+            <span class="stack-pct">92%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">GitLab CI</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:85%"></div></div>
+            <span class="stack-pct">85%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">Prometheus</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:82%"></div></div>
+            <span class="stack-pct">82%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">Python</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:78%"></div></div>
+            <span class="stack-pct">78%</span>
+          </div>
+          <div class="stack-row">
+            <span class="stack-name">NGINX</span>
+            <div class="stack-bar-bg"><div class="stack-bar-fill" style="width:80%"></div></div>
+            <span class="stack-pct">80%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-left">
+      <span>knm</span>.portfolio · Built with ♥ and HTML · Hosted on GitHub Pages
+    </div>
+    <div class="f-right">
+      <a href="mailto:murthyk7592@gmail.com">email</a>
+      <a href="https://linkedin.com/in/narayana-murthy-k" target="_blank">linkedin</a>
+      <a href="https://github.com/narayana-murthy-k" target="_blank">github</a>
+    </div>
+  </footer>
+
+</div><!-- /wrapper -->
+
+<script>
+  // Animated counters
+  const counters = document.querySelectorAll('[data-target]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1400;
+      const steps = 50;
+      const increment = target / steps;
+      let current = 0;
+      let step = 0;
+      const timer = setInterval(() => {
+        step++;
+        current = Math.min(target, parseFloat((increment * step).toFixed(1)));
+        el.textContent = (Number.isInteger(target) ? Math.round(current) : current) + suffix;
+        if (step >= steps) clearInterval(timer);
+      }, duration / steps);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => observer.observe(c));
+</script>
+
+</body>
+</html>
